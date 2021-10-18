@@ -6,7 +6,7 @@ const api = 'https://data.gov.il/api/3/action/datastore_search?resource_id=29f4e
 
 
 
-const AttractionController = function () {
+const AttractionsController = function () {
 
   this.getAttractionsList = async (req, res) => {
     console.log('called getAttractionsList')
@@ -65,4 +65,4 @@ const AttractionController = function () {
 }
 
 
-module.exports = AttractionController
+module.exports = AttractionsController
