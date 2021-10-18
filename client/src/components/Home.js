@@ -2,7 +2,7 @@ import react from 'react'
 import { Link } from 'react-router-dom';
 
 
-const Home = () => {
+const Home = ({ getLocationData }) => {
 
   const [loader, setLoader] = react.useState()
   const [location, setLocation] = react.useState()
@@ -24,6 +24,11 @@ const Home = () => {
       setLoader(false)
       return setLocation(temp)
     });
+  }
+
+  const toAttractionRoute = () =>{
+
+    return getLocationData(location)
   }
 
 
@@ -55,7 +60,7 @@ const Home = () => {
         <br />
         <div>
           <h4>press the button to find near attractions</h4>
-          <button><Link to="/attractions" >find near attractions</Link></button>
+          <button><Link to="/attractions" onClick={toAttractionRoute} >find near attractions</Link></button>
         </div>
 
       </>}

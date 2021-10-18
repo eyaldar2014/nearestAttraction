@@ -3,3 +3,12 @@
   padding: 0;
   margin: 0;
 }
+
+table td{
+
+  overflow:auto;
+  max-width: calc(100vw / 6);
+  height: calc(100vw / 7);
+  background-color: lightblue;
+  padding: 5px
+}

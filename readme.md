@@ -35,7 +35,7 @@ basic planning ;
 
       - front : table of attractions sorted by distance from user + additional info (name, id, adderess, opening hours(if there is), distance from user(sorting parameter), website link)
 
-      - back : get data from db. calculate distance from user (pythagoras). sort after calculation (list of numbers).
+      - back : get data from db. calculate distance from user (Haversine formula). sort after calculation (list of numbers).
 
 
     3. Attraction_Type btn

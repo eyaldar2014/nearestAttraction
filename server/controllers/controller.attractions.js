@@ -1,7 +1,7 @@
 const axios = require('axios')
 const AttractionsList = require('../models/model.attractionsList');
 
-// gov api data for attractions. data is not filtered yet
+// gov api data for attractions
 const api = 'https://data.gov.il/api/3/action/datastore_search?resource_id=29f4ec99-ec7f-43c1-947e-60a960980607&limit=40'
 
 
@@ -9,7 +9,7 @@ const api = 'https://data.gov.il/api/3/action/datastore_search?resource_id=29f4e
 const AttractionsController = function () {
 
   this.getAttractionsList = async (req, res) => {
-    console.log('called getAttractionsList')
+    // console.log('called getAttractionsList')
 
     // two options : if db is empty, callApi function will be executed. else, the function will send back data from mongodb
     try{
@@ -19,13 +19,13 @@ const AttractionsController = function () {
       res.status(200).send({'attractions' : attractions[0]})
     }
     catch(error){
-       return res.status(500).send(error)
+      res.status(500).send(error)
     }
   }
 
   // NOTE : this function always returns the same/first 40 attractions from the api (the api call url is modified to do so). could be upgraded.
   this.callApi = async (req, res) => {
-    console.log('called callApi')
+    // console.log('called callApi')
 
     try{
       const response = await axios.get( api )
@@ -59,9 +59,10 @@ const AttractionsController = function () {
       res.status(201).send({'attractions' : saved})
     }
     catch(error) {
-      return res.status(500).send({'error' : error})
+      res.status(500).send({'error' : error})
     }
   }
+
 }
 
 
