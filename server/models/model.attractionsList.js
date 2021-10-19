@@ -5,7 +5,7 @@ const mongooseAttractions = require('../db/mongooseAttractions');
 const attractionsListSchema =  new mongoose.Schema({
 
   data: {
-    type: Object,
+    type: Array,
     required : true
   }
 

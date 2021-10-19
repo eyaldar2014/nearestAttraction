@@ -67,12 +67,12 @@ check with Omri :
 
 * eliminate UNKNOWNS - talk with Omri
 
-* great code - readable and well functioning
+* great code - readable and well functioning + code comments
 
 * code comments and straight forward process managment
 
 * use git(public) often and upload to heroko - keep heroku clean from bugs (production)
 
-* focus on backend side ! basic design. detailed server. 
+* focus on backend side ! basic design. detailed server and functionality
 
 * submit the task through whatsapp :  Github & Heroku links. 

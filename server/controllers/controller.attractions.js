@@ -5,7 +5,6 @@ const AttractionsList = require('../models/model.attractionsList');
 const api = 'https://data.gov.il/api/3/action/datastore_search?resource_id=29f4ec99-ec7f-43c1-947e-60a960980607&limit=40'
 
 
-
 const AttractionsController = function () {
 
   this.getAttractionsList = async (req, res) => {
@@ -30,10 +29,9 @@ const AttractionsController = function () {
     try{
       const response = await axios.get( api )
       
-      // arrange data from api for later usage : one object with all the attractions.
-      // the object is being parted into arrays by Attraction_Type
-      // for each attraction all the necessary fields in good syntax
-      const data = {}
+      // arrange data from api for later usage : one array with all the attractions.
+      // for each attraction all the necessary fields are stored in good syntax
+      const data = []
       response.data.result.records.forEach(element => {
         let temp = {}
         temp.name = element.Name
@@ -46,10 +44,9 @@ const AttractionsController = function () {
         // latitude is Y
         temp.latitude = element.Y
         temp.link = element.URL
+        temp.type = element.Attraction_Type
 
-        // data from api is being sorted by groups of Attraction_Type
-        if (!data[element.Attraction_Type]) data[element.Attraction_Type] = []
-        data[element.Attraction_Type].push(temp)
+        data.push(temp)
       });
 
       

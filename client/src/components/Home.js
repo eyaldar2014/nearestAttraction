@@ -8,8 +8,6 @@ const Home = ({ getLocationData }) => {
   const [location, setLocation] = react.useState()
 
 
-  // react.useEffect(()=>{},[])
-
   const getLocation = () => {
 
     setLoader(true)
@@ -22,11 +20,14 @@ const Home = ({ getLocationData }) => {
       temp.longitude = position.coords.longitude
 
       setLoader(false)
-      return setLocation(temp)
+      setLocation(temp)
     });
+
+    toAttractionRoute(temp)
+    return true
   }
 
-  const toAttractionRoute = () =>{
+  const toAttractionRoute = (location) => {
 
     return getLocationData(location)
   }
@@ -60,7 +61,7 @@ const Home = ({ getLocationData }) => {
         <br />
         <div>
           <h4>press the button to find near attractions</h4>
-          <button><Link to="/attractions" onClick={toAttractionRoute} >find near attractions</Link></button>
+          <button><Link to="/attractions" >find near attractions</Link></button>
         </div>
 
       </>}

@@ -12,3 +12,14 @@ table td{
   background-color: lightblue;
   padding: 5px
 }
+
+.right{
+  float: right;
+  padding: 5px;
+  margin-top: 20px;
+  margin-right: 200px;
+}
+
+.back{
+  margin-bottom: 30px;
+}
