@@ -15,17 +15,34 @@ function App() {
   const [locationData, setLocationData] = react.useState()
   const [favorites, setFavorites] = react.useState([])
 
+  
+  react.useEffect(() => {
+
+    readFavoritesFromLocalStorage()
+  }, [])
+
   const getLocationData = (currentLocation) => {
 
     return setLocationData(currentLocation)
   }
 
+  // update between Attractions and Favorites components
   const getFavorites = (data) => {
 
     return setFavorites(data)
   }
 
-  
+  // read local storage and update favorites
+  const readFavoritesFromLocalStorage = () => {
+
+    let myFavorites = JSON.parse(localStorage.getItem('favorites'))    
+    // console.log('myFavorites', myFavorites)
+
+    if (myFavorites) setFavorites(myFavorites)
+    return true
+  }
+
+
   return (
     <div>
       <Router>
@@ -35,12 +52,12 @@ function App() {
         <Switch>
 
           <Route exact path="/favorites">
-            <Favorites favorites={favorites} getFavorites={getFavorites} />
+            <Favorites locationData={locationData} favorites={favorites} getFavorites={getFavorites} />
           </Route>
 
-            <Route exact path="/attractions">
-              <Attractions locationData={locationData} getFavorites={getFavorites} favoritesList={favorites} />
-            </Route>
+          <Route exact path="/attractions">
+            <Attractions locationData={locationData} favoritesList={favorites} getFavorites={getFavorites} />
+          </Route>
 
           <Route exact path="/">
             <Home getLocationData={getLocationData} />

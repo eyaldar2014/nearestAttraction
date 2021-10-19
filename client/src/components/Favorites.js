@@ -3,22 +3,72 @@ import { Link } from 'react-router-dom';
 
 import AttractionRow from './AttractionRow'
 
-const Favorites = ({ favorites, getFavorites }) => {
+const Favorites = ({ favorites, getFavorites, locationData }) => {
 
 
   const [favoritesList, setFavoritesList] = react.useState(favorites)
 
+  const [toSortFavorites, setToSortFavorites] = react.useState(true)
+
+
   react.useEffect(() => {
 
-    // read local storage
-
+    // optional : sort favorite list by distance :
+    // 1. calculate distance from location
+    // 2. sort by distance
+    if (favoritesList.length > 1 && toSortFavorites) {
+      sortFavorites()
+    }
 
   }, [favorites, favoritesList])
 
+  const sortFavorites = () => {
+
+    let temp = [...favoritesList]
+
+    temp.forEach(element => {
+      element.distance = calculateDistance(element.latitude, element.longitude)
+    });
+
+    temp.sort((a, b) => {
+      return a.distance - b.distance
+    })
+
+    setFavoritesList(temp)
+    setToSortFavorites(false)
+    return true
+
+  }
+
+  // copied from attractions - could be shared from outside controller / located in app.js for better practice and future updates
+  const calculateDistance = (lat, lon) => {
+
+    if (!locationData) return 0
+
+    const { longitude, latitude } = locationData
+
+    const lon1 = lon * Math.PI / 180;
+    const lon2 = longitude * Math.PI / 180;
+    const lat1 = lat * Math.PI / 180;
+    const lat2 = latitude * Math.PI / 180;
 
 
+    // Haversine formula
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+    let a = Math.pow(Math.sin(dlat / 2), 2)
+      + Math.cos(lat1) * Math.cos(lat2)
+      * Math.pow(Math.sin(dlon / 2), 2);
 
-  // remove from favorites
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    // Radius of earth in kilometers
+    let r = 6371;
+
+    return Math.round(c * r)
+  }
+
+  // remove from favorites & update local storage
   const favoritesAction = (action, data) => {
 
     let newFavorites = [...favoritesList]
@@ -28,13 +78,14 @@ const Favorites = ({ favorites, getFavorites }) => {
 
     setFavoritesList(newFavorites)
 
-    // update main list
+    // send updated favorites to app.js, and from there to attractions list
     getFavorites(newFavorites)
+
+    // update local storage
+    localStorage.setItem("favorites", JSON.stringify(newFavorites))
 
     return true
   }
-
-
 
 
   return <>
@@ -76,9 +127,3 @@ const Favorites = ({ favorites, getFavorites }) => {
 
 
 export default Favorites;
-
-
-// add and remove from this list functionality
-// every time update local storage
-// mount local storage every restart of the program
-// optional : sort favorite list by distance

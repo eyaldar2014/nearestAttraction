@@ -31,9 +31,7 @@ const Attractions = ({ locationData, getFavorites, favoritesList }) => {
       updateFavorites()
     }
 
-
   }, [locationData, favoritesList, attractionListByDistance])
-
 
   // update favorites after visiting favorites route
   const updateFavorites = () => {
@@ -87,6 +85,8 @@ const Attractions = ({ locationData, getFavorites, favoritesList }) => {
 
   const calculateDistance = (lat, lon) => {
 
+    if(!locationData) return 0
+
     const { longitude, latitude } = locationData
 
     const lon1 = lon * Math.PI / 180;
@@ -129,7 +129,7 @@ const Attractions = ({ locationData, getFavorites, favoritesList }) => {
     return mapped
   }
 
-  // add or remove from favorites
+  // add or remove from favorites & update local storage
   const favoritesAction = (action, data) => {
 
     let newFavorites = [...favorites]
@@ -154,6 +154,10 @@ const Attractions = ({ locationData, getFavorites, favoritesList }) => {
     getFavorites(newFavorites)
     setFavorites(newFavorites)
     setAttractionListByDistance(temp)
+
+    // update local storage
+    localStorage.setItem("favorites", JSON.stringify(newFavorites))
+
     return true
   }
 
